@@ -1,3 +1,15 @@
+// Set messages after game over
+// the table game needs to be formated to look good. change it.
+// what about thos 11, 12, 13?
+// what about aces
+// the player can hit forever
+// there is no win counter/bet system
+// there is no deck to draw from 
+// the cards arent red or black
+// the cards are lame
+// there is no delay on showing cards
+// you can see the dealers cards
+
 // 1. when the user click deal, deal.
 var theDeck = [];
 var playersHand = [];
@@ -22,20 +34,31 @@ $(document).ready(function(){
 
 		calculateTotal(playersHand, 'player');
 		calculateTotal(dealersHand, 'dealer');
+		// for(var = i; i < theDeck.length; i++){
+		// 	if(theDeck[i] == "10c"){
+		// 		cardToPlace = ""
+		// 	}
+		// }
+
 
 	});
 
 	$('.hit-button').click(function(){
-		placeCard('player', 'three', theDeck[4]);
+		// placeCard('player', 'three', theDeck[4]);
 		var slotForNewCard = '';
 		if(playersHand.length == 2){slotForNewCard = "three";}
 			else if(playersHand.length == 3){slotForNewCard = "four";}
 			else if(playersHand.length == 4){slotForNewCard = "five";}
 			else if(playersHand.length == 5){slotForNewCard = "six";}
+			// else{(checkWin());}
 			placeCard('player', slotForNewCard, theDeck[topOfTheDeck]);
 			playersHand.push(theDeck[topOfTheDeck]);
-			calculateTotal(playersHand, 'player');
+			playerTotal = calculateTotal(playersHand, 'player');
 			topOfTheDeck++;
+			if (playerTotal > 21){
+				// setInterval(function(){checkWin(); }, 500);
+				checkWin();
+			}
 
 
 	});
@@ -62,15 +85,45 @@ $(document).ready(function(){
 
 });
 
-function checkWin(){
-	alert("Game Over");
-}
-
 function placeCard(who, where, cardToPlace){
+	console.log('pppppppppp')
 	var classSelector = '.'+who+'-cards .card-'+where;
 	// write logic to fix the 11, 12, 13 value
-	$(classSelector).html(cardToPlace);
+	$(classSelector).html('<img src="images/' + cardToPlace + '.png">');
+	
 }
+
+function checkWin(){
+	// Get player total
+	// Get dealer total
+	var playersTotal = calculateTotal(playersHand, 'player');
+	var dealerTotal = calculateTotal(dealersHand, 'dealer');
+
+	if(playersTotal > 21){
+		//player has busted
+		//set message
+		alert("You have busted!");
+	}else if(dealerTotal > 21){
+		//dealer has busted
+		//set message
+		alert("You win!")
+	}else{
+		//neither player has more than 21
+		if(playersTotal > dealerTotal){
+			//player won
+			alert("You win!")
+		}else if(dealerTotal > playersTotal){
+			//dealer won
+			alert("You lose!")
+		}else{
+			//push. tie
+			alert("Tie. Game over.")
+		}
+	}
+	// location.reload();
+}
+
+
 
 function createDeck(){
 	// fill the deck with 
@@ -105,8 +158,8 @@ function calculateTotal(hand, whosTurn){
 		if (cardValue > 10) {
 			cardValue = 10;
 		}
-		console.log(hand[i]);
-		console.log(cardValue);
+		// console.log(hand[i]);
+		// console.log(cardValue);
 		total += cardValue;
 	}
 	// update the html with the new total
