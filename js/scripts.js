@@ -15,8 +15,36 @@ var theDeck = [];
 var playersHand = [];
 var dealersHand = [];
 var topOfTheDeck = 4;
+var bet = 0;
+var cash = 300;
 
 $(document).ready(function(){
+	$('.chip').each(function(){
+        if(Number($(this).attr('chipValue')) > cash){
+            $(this).removeClass('btn-success');
+            $(this).addClass('btn-danger');
+        }
+    });
+
+    $('.chip').click(function(){
+        var val = Number($(this).attr('chipValue'));
+
+        if(val <= cash){
+            bet += val;
+            cash -= val;
+
+            $('.cash').html(cash);
+            $('.bet').html(bet);
+        }
+
+        $('.chip').each(function(){
+            if(Number($(this).attr('chipValue')) > cash){
+                $(this).removeClass('btn-success');
+                $(this).addClass('btn-danger');
+            }
+        });
+    });
+
 	$('.deal-button').click(function(){
 		createDeck(); //run a function that creates an array of 1H-13C
 		shuffleDeck();//shuffle the deck
@@ -56,9 +84,9 @@ $(document).ready(function(){
 			playerTotal = calculateTotal(playersHand, 'player');
 			topOfTheDeck++;
 			if (playerTotal > 21){
-				setInterval(function(){checkWin(); }, 500);
-				clearInterval(function(){checkWin(); });
-				// checkWin();
+				// setInterval(function(){checkWin(); }, 500);
+				// clearInterval(function(){checkWin(); });
+				setTimeout(function(){checkWin();}, 1000);
 			}
 
 
@@ -81,10 +109,28 @@ $(document).ready(function(){
 		}
 
 		// Dealer has at least 17 check to see who won.
-		checkWin();
+		setTimeout(function(){checkWin();}, 1000);
 	});
 
+	$('.reset-button').click(function(){
+        reset();
+    });
+
 });
+
+function reset(){
+	theDeck = [];
+	playersHand = [];
+	dealersHand = [];
+	topOfTheDeck = 4;
+	$('.card').html('');
+	calculateTotal(playersHand, 'player');
+	calculateTotal(dealersHand, 'dealer');
+	$('.hit-button').prop('disabled', false);
+    $('.deal-button').prop('disabled', false);
+    $('.stand-button').prop('disabled', false);
+    $('.chip').prop('disabled', false);
+}
 
 function placeCard(who, where, cardToPlace){
 	// console.log('pppppppppp')
@@ -103,28 +149,48 @@ function checkWin(){
 	if(playersTotal > 21){
 		//player has busted
 		//set message
-		alert("You have busted!");
+		lose();
 	}else if(dealerTotal > 21){
 		//dealer has busted
 		//set message
-		alert("You win!")
+		win();
 	}else{
 		//neither player has more than 21
 		if(playersTotal > dealerTotal){
 			//player won
-			alert("You win!")
+			win();
 		}else if(dealerTotal > playersTotal){
 			//dealer won
-			alert("You lose!")
+			lose();
 		}else{
 			//push. tie
 			alert("Tie. Game over.")
 		}
 	}
-	location.reload();
+	// location.reload();
 }
 
+function win(){
+	alert("You Win!");
+	gameOver();
+	cash = cash + (bet * 2);
+    bet = 0;
+    $('.cash').html(cash);
+    $('.bet').html(0);
+}
 
+function lose(){
+    alert("You lose!");
+    gameOver();
+    bet = 0;
+    $('.bet').html(0);
+}
+
+function gameOver(){
+    $('.hit-button').prop('disabled', true);
+    $('.deal-button').prop('disabled', true);
+    $('.stand-button').prop('disabled', true);
+}
 
 function createDeck(){
 	// fill the deck with 
