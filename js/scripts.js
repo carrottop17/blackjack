@@ -87,11 +87,11 @@ $(document).ready(function(){
 });
 
 function placeCard(who, where, cardToPlace){
-	console.log('pppppppppp')
+	// console.log('pppppppppp')
 	var classSelector = '.'+who+'-cards .card-'+where;
 	// write logic to fix the 11, 12, 13 value
 	$(classSelector).html('<img src="images/' + cardToPlace + '.png">');
-	
+	$(classSelector).toggleClass('card-active');
 }
 
 function checkWin(){
@@ -152,12 +152,19 @@ function shuffleDeck(){
 function calculateTotal(hand, whosTurn){
 	// console.log(hand);
 	// console.log(whosTurn);
+	var hasAce = false; //init ace as false
 	var total = 0;
 	var cardValue = 0;
 	for (var i = 0; i<hand.length; i++){
-		cardValue = Number(hand[i].slice(0,-1))
-		if (cardValue > 10) {
+		cardValue = Number(hand[i].slice(0,-1));
+		if ((cardValue == 1) && ((total + 11) <= 21)){
+			cardValue = 11;
+			hasAce = true;
+		} else if (cardValue > 10) {
 			cardValue = 10;
+		} else if ((cardValue + total > 21) && (hasAce)){
+			total = total - 10;
+			hasAce = false;
 		}
 		// console.log(hand[i]);
 		// console.log(cardValue);

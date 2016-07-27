@@ -2,7 +2,7 @@
 	background-color: green;
 	border: 5px solid #663300;
 	border-radius: 30px;
-	margin-top: 30px;
+	margin-top: 60px;
 	padding: 30px 0px;
 }
 
@@ -16,6 +16,16 @@
 	padding: 0;
 	border-radius: 10px;
 	padding-top: 3px;
+	transition:all 1s ease;
+	
+}
+
+/* .card-three{
+	transition: all 1s ease;
+} */
+
+.card-active{
+	transform: rotateY(180deg);
 }
 
 .dealer-hand-wrapper, .player-hand-wrapper {
@@ -43,3 +53,22 @@ img{
 	width: 100%;
 	border-radius: 5px;
 }
+body{
+	background-image: url('../images/backgroundimage.jpg');
+}
+h1{
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
