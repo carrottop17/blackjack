@@ -57,8 +57,8 @@ $(document).ready(function(){
 		placeCard('dealer', 'one', theDeck[1]);
 		playersHand.push(theDeck[2]);
 		placeCard('player', 'two', theDeck[2]);
-		dealersHand.push(theDeck[3]);
-		placeCard('dealer', 'two', theDeck[3]);
+		// dealersHand.push(theDeck[3]);
+		// placeCard('dealer', 'two', theDeck[3]);
 
 		calculateTotal(playersHand, 'player');
 		calculateTotal(dealersHand, 'dealer');
@@ -98,7 +98,8 @@ $(document).ready(function(){
 		var dealerTotal = calculateTotal(dealersHand, 'dealer');
 		while(dealerTotal < 17){
 			// dealer has less then 17 hit away
-			if(dealersHand.length == 2){slotForNewCard = "three";}
+			if(dealersHand.length == 1){slotForNewCard = "two";}
+			else if(dealersHand.length == 2){slotForNewCard = "three";}
 			else if(dealersHand.length == 3){slotForNewCard = "four";}
 			else if(dealersHand.length == 4){slotForNewCard = "five";}
 			else if(dealersHand.length == 5){slotForNewCard = "six";}
