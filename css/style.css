@@ -9,13 +9,13 @@
 .card{
 	height: 110px;
 	background-color: green;
+	background-image: url("../images/cardback.jpg");
 	color: black;
 	margin: 10px;
-	width: 13%;
+	width: 11%;
 	padding: 0;
 	border-radius: 10px;
 	padding-top: 3px;
-	transition: width 3s;
 }
 
 .dealer-hand-wrapper, .player-hand-wrapper {
@@ -29,7 +29,11 @@
 	text-align: center;
 }
 
-.player-actions button{
+.row-player-actions{
+	margin-top: 20px;
+}
+
+.row-player-actions button{
 	width: 100%;
 	background: black;
 	color: white;

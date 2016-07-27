@@ -56,8 +56,9 @@ $(document).ready(function(){
 			playerTotal = calculateTotal(playersHand, 'player');
 			topOfTheDeck++;
 			if (playerTotal > 21){
-				// setInterval(function(){checkWin(); }, 500);
-				checkWin();
+				setInterval(function(){checkWin(); }, 500);
+				clearInterval(function(){checkWin(); });
+				// checkWin();
 			}
 
 
@@ -120,7 +121,7 @@ function checkWin(){
 			alert("Tie. Game over.")
 		}
 	}
-	// location.reload();
+	location.reload();
 }
 
 
