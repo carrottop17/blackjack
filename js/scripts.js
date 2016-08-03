@@ -62,6 +62,7 @@ $(document).ready(function(){
 
 		calculateTotal(playersHand, 'player');
 		calculateTotal(dealersHand, 'dealer');
+		doneBetting();
 		// for(var = i; i < theDeck.length; i++){
 		// 	if(theDeck[i] == "10c"){
 		// 		cardToPlace = ""
@@ -191,6 +192,10 @@ function gameOver(){
     $('.hit-button').prop('disabled', true);
     $('.deal-button').prop('disabled', true);
     $('.stand-button').prop('disabled', true);
+}
+
+function doneBetting(){
+	$('.chip').prop('disabled', true);
 }
 
 function createDeck(){
